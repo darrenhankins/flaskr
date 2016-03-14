@@ -1,9 +1,9 @@
 # all the imports
+# all the imports
 import sqlite3
-
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
-from contextlib import closing
+# from contextlib import closing
 
 # configuration
 DATABASE = '/tmp/flaskr.db'
@@ -20,7 +20,6 @@ app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
-
 
 def init_db():
     with closing(connect_db()) as db:
@@ -53,6 +52,26 @@ def add_entry():
     g.db.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
+
+"""
+@app.route('/delete/<int:task_id>')
+#@app.route('/delete/<int:task_id>', methods=['DELETE'])
+#def delete_entry(task_id):
+#@app.route('/delete')
+def delete_entry(task_id):
+    '''
+    if not session.get('logged_in'):
+        abort(401)
+    g.db.execute('delete from users where id = ?', (delete_userid,))
+
+    task = [task for task in tasks if task['id'] == task_id]
+    if len(task) == 0:
+        abort(404)
+    tasks.remove(task[0])
+
+    flash('Entry successfully deleted')
+    return redirect(url_for('show_entries'))
+"""
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
